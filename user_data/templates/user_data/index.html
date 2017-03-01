@@ -1,0 +1,173 @@
+<html>
+{% load static %}
+<head>
+    <title>Demo</title>
+</head>
+
+<body ng-app="myApp">
+
+<div ng-controller="contactListController">
+    <h3 class="text-center">Contact List Application</h3>
+    </br>
+    <div class="container">
+        <form data-abide enctype="multipart/form-data" id="userDetails" name="userDetails" novalidate="novalidate"
+              method="post" style="padding-bottom: 20px">
+            {% csrf_token %}
+
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="user.name" placeholder="name" name="name"
+                               ng-required="true">
+
+                        <div ng-messages="userDetails.name.$error" style="color:maroon" role="alert">
+                            <div ng-if="userDetails.name.$dirty">
+                                <div ng-message="required">Please enter name</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <input type="email" class="form-control" cemail ng-model="user.email" placeholder="email"
+                               name="email" ng-required="true">
+
+                        <div ng-messages="userDetails.email.$error" style="color:maroon" role="alert">
+                            <div ng-if="userDetails.email.$dirty">
+                                <div ng-message="required">Please enter email</div>
+                                <div ng-message="cemail">Invalid email</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <input type="radio" value="Female" ng-model="user.gender"/> Female
+                        <input type="radio" value="Male" ng-model="user.gender"/> Male
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="user.address" placeholder="address"
+                               name="address" ng-required="true">
+
+                        <div ng-messages="userDetails.address.$error" style="color:maroon" role="alert">
+                            <div ng-if="userDetails.address.$dirty">
+                                <div ng-message="required">Please enter address</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="user.city" placeholder="city" name="city"
+                               ng-required="true">
+
+                        <div ng-messages="userDetails.city.$error" style="color:maroon" role="alert">
+                            <div ng-if="userDetails.city.$dirty">
+                                <div ng-message="required">Please enter city</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="user.state" placeholder="state" name="state"
+                               ng-required="true">
+
+                        <div ng-messages="userDetails.state.$error" style="color:maroon" role="alert">
+                            <div ng-if="userDetails.state.$dirty">
+                                <div ng-message="required">Please enter state</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control" cphone ng-model="user.phone" placeholder="phone"
+                               name="phone" ng-required="true">
+
+                        <div ng-messages="userDetails.phone.$error" style="color:maroon" role="alert">
+                            <div ng-if="userDetails.phone.$dirty">
+                                <div ng-message="required">Please enter phone</div>
+                                <div ng-message="cphone">Invalid phone number</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control" czip ng-model="user.zip" placeholder="zip" name="zip"
+                               ng-required="true">
+
+                        <div ng-messages="userDetails.zip.$error" style="color:maroon" role="alert">
+                            <div ng-if="userDetails.zip.$dirty">
+                                <div ng-message="required">Please enter zip</div>
+                                <div ng-message="czip">Invalid zip</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group" ng-show="userDetails.$valid">
+                        <input type="submit" class="btn btn-primary" value="ADD" ng-click="add(user)" ng-hide="user.id">
+                        <input type="submit" class="btn btn-primary" value="UPDATE" ng-click="update(user)"
+                               ng-show="user.id">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div>
+            <label>Filter Text : </label>
+            <input type="text" ng-model="filterText"/>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Phone</th>
+            <th>Zip</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in userContacts | filter: filterText track by $index">
+                <td>[[ user.name ]]</td>
+                <td>[[ user.email ]]</td>
+                <td>[[ user.gender ]]</td>
+                <td>[[ user.address ]]</td>
+                <td>[[ user.city ]]</td>
+                <td>[[ user.state ]]</td>
+                <td>[[ user.phone ]]</td>
+                <td>[[ user.zip ]]</td>
+                <td>
+                    <button type="button" class="btn btn-info" ng-click="edit(user)">Edit</button>
+                </td>
+                <td><span class="glyphicon glyphicon-remove-sign" style="font-size:23px" aria-hidden="true"
+                          ng-click="delete(user.id)"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="mydiv" style="display: none;width: 50; margin: 0 auto;">
+    <div class="loader"></div>
+</div>
+
+<script src="https://code.angularjs.org/1.3.14/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.3.14/angular-messages.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="{% static 'user_data/js/demo.js' %}"></script>
+<link rel="stylesheet" href="{% static 'user_data/css/demo.css' %}">
+</body>
+</html>
