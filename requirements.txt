@@ -22,7 +22,7 @@ django-mongodb-engine==0.6.0
 django-redis==4.4.3
 django-redis-cache==1.7.1
 django-rest-framework-mongoengine==2.0.2
-djangorestframework==3.0.3
+djangorestframework==3.11.2
 djangotoolbox==1.8.0
 docker-compose==1.9.0
 docker-py==1.10.6
